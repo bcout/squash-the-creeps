@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://models/mob.glb" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Mob.gd" type="Script" id=2]
+[ext_resource path="res://animations/float_anim.tres" type="Animation" id=3]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.856907, 0.612122, 1.22066 )
+
+[node name="Mob" type="KinematicBody" groups=["mob"]]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource( 2 )
+
+[node name="Pivot" type="Spatial" parent="."]
+
+[node name="Character" parent="Pivot" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 0.987688, 0.156434, 0, -0.156434, 0.987688, 0.164, 0.35, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.385283, 0 )
+shape = SubResource( 1 )
+
+[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0085063, 0.357266, 0.297722 )
+aabb = AABB( -1.23767, -0.769824, -1.68, 2.47535, 1.53965, 3.36001 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Float"
+anims/Float = ExtResource( 3 )
+anims/float_anim = ExtResource( 3 )
+
+[connection signal="screen_exited" from="VisibilityNotifier" to="." method="_on_screen_exited"]
